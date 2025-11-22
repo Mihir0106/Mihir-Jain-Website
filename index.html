@@ -1,0 +1,512 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Github, 
+  Linkedin, 
+  Mail, 
+  ExternalLink, 
+  Code2, 
+  Server, 
+  Database, 
+  Cloud, 
+  Cpu, 
+  Terminal, 
+  Menu, 
+  X,
+  ChevronDown,
+  Award,
+  BookOpen,
+  Briefcase,
+  MapPin,
+  Phone
+} from 'lucide-react';
+
+const Portfolio = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [scrolled, setScrolled] = useState(false);
+
+  // Handle scroll effects
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+      
+      // Update active section based on scroll position
+      const sections = ['home', 'about', 'skills', 'experience', 'projects', 'achievements', 'contact'];
+      const current = sections.find(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top >= -100 && rect.top <= 300;
+        }
+        return false;
+      });
+      if (current) setActiveSection(current);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
+  const skills = {
+    languages: {
+      icon: <Code2 className="w-6 h-6" />,
+      title: "Languages",
+      items: ["Java", "C#", "C++", "SQL", "TypeScript", "JavaScript"]
+    },
+    backend: {
+      icon: <Server className="w-6 h-6" />,
+      title: "Backend & Frameworks",
+      items: ["Spring Boot", "Spring MVC", "Hibernate", "Kafka", "Node.js", "RESTful Services"]
+    },
+    database: {
+      icon: <Database className="w-6 h-6" />,
+      title: "Databases & Caching",
+      items: ["PostgreSQL", "Redis", "MySQL", "MongoDB"]
+    },
+    cloud: {
+      icon: <Cloud className="w-6 h-6" />,
+      title: "Cloud & DevOps",
+      items: ["AWS (EC2, S3, Lambda)", "Docker", "CI/CD (Jenkins)", "API Gateway"]
+    }
+  };
+
+  const experience = [
+    {
+      company: "Mobile Premier League (MPL)",
+      role: "Software Development Engineer - 1",
+      period: "Nov 2023 - Present",
+      description: "Engineering scalable backend systems and game logic for millions of users.",
+      points: [
+        "Engineered frontend systems for games like Bingo, Uno, and Ultra Ludo using Event-Driven Architecture.",
+        "Architected reusable NX Tournament modules and a generic Gold Currency system scalable across all titles.",
+        "Implemented Latency Compensation in Bingo, increasing engagement by 5%.",
+        "Resolved critical bugs across 9+ games (Poker, Ludo) contributing to a 10% increase in retention.",
+        "Tech Stack: Java, C#, Web Socket, LLD, System Design."
+      ]
+    },
+    {
+      company: "XROS Fellowship - UC Berkeley EECS",
+      role: "Software Engineering Intern",
+      period: "Apr 2023 - Jun 2023",
+      description: "Research and development in mixed reality and AI integration.",
+      points: [
+        "Designed and deployed API integration between Scenic and Unity for real-time simulations.",
+        "Enhanced AI-driven logic for virtual models, optimizing decision-making algorithms.",
+        "Tech Stack: Unity, APIs, OOP, Python, Mixed Reality."
+      ]
+    },
+    {
+      company: "ReSkilll & Meta",
+      role: "Open Source Fellow",
+      period: "2023",
+      description: "Selected for the exclusive Open Source Fellowship program.",
+      points: [
+        "Shortlisted among Top 100 Students in Open Source Fellowship Program organized by ReSkilll and Meta.",
+        "Engaged with open source ecosystems and contributed to developer communities.",
+        "Demonstrated proficiency in collaborative software development."
+      ]
+    },
+    {
+      company: "NIT Hamirpur",
+      role: "Student Researcher",
+      period: "2019 - 2024",
+      description: "Academic research and publication in engineering education.",
+      points: [
+        "Authored and published a research paper: 'Virtual Reality in Electronics and Communication Engineering Education' (IEEE).",
+        "Conducted research on the impact of immersive technologies in technical education.",
+        "Collaborated with faculty to analyze educational methodologies."
+      ]
+    }
+    // I couldn't access your website to fetch older roles. 
+    // Uncomment and fill this block to add them manually:
+    /*
+    , {
+      company: "Previous Company Name",
+      role: "Intern / Developer",
+      period: "Month Year - Month Year",
+      description: "Brief description of the role...",
+      points: [
+        "Key achievement 1",
+        "Key achievement 2"
+      ]
+    }
+    */
+  ];
+
+  const projects = [
+    {
+      title: "Thoughts - HyperLocal Networking Backend",
+      period: "Nov 2025",
+      description: "A location-based social feed system built for high concurrency and sub-second response times.",
+      tags: ["Java 17", "Spring Boot", "Kafka", "PostgreSQL", "AWS", "WebSockets"],
+      details: [
+        "Architected Event-Driven Architecture with Kafka for sub-second feed delivery.",
+        "Developed 15+ RESTful endpoints with JWT auth and distributed rate limiting.",
+        "Implemented 8-step post-ingestion pipeline for content validation.",
+        "Deployed on AWS EC2 with Docker and CI/CD via GitHub Actions."
+      ],
+      link: "https://github.com/Mihir0106" 
+    }
+  ];
+
+  const achievements = [
+    "Shortlisted among Top 100 Students in Open Source Fellowship Program (ReSkilll & Meta, 2023)",
+    "Secured 2nd Rank in National Level Immersive Tech Hackathon (3500+ participants)",
+    "Won Cloud Track and Best Prototype at Kathmandu University Hackfest 2k21",
+    "Winner of AiBorne Tech Problem Statement at Electrothon 3.0",
+    "Publication: Virtual Reality in Electronics and Communication Engineering Education (IEEE)"
+  ];
+
+  return (
+    <div className="bg-slate-900 text-slate-200 min-h-screen font-sans selection:bg-teal-500 selection:text-white">
+      
+      {/* Navigation */}
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/95 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          <a href="#" className="text-2xl font-bold text-teal-400 tracking-tighter">
+            &lt;Mihir /&gt;
+          </a>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex space-x-8">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href}
+                className={`text-sm font-medium transition-colors hover:text-teal-400 ${activeSection === link.href.substring(1) ? 'text-teal-400' : 'text-slate-400'}`}
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden text-slate-300 hover:text-white"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Nav */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-slate-800 border-b border-slate-700 py-4 px-6 flex flex-col space-y-4 shadow-2xl">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href}
+                className="text-slate-300 hover:text-teal-400 py-2 block"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+        )}
+      </nav>
+
+      {/* Hero Section */}
+      <section id="home" className="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-20 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
+        <div className="absolute bottom-20 left-0 w-72 h-72 bg-blue-600/10 rounded-full blur-3xl -z-10"></div>
+
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <h2 className="text-teal-400 font-medium tracking-wide">HELLO, I'M</h2>
+            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight">
+              Mihir Jain
+            </h1>
+            <h3 className="text-2xl md:text-3xl text-slate-400 font-light">
+              Software Engineer & System Architect
+            </h3>
+            <p className="text-slate-400 max-w-lg leading-relaxed text-lg">
+              Passionate about building scalable systems. Expert in Java/C# ecosystems, Spring Boot, and Event-Driven Microservices.
+            </p>
+            
+            <div className="flex flex-wrap gap-4 pt-4">
+              <a href="https://github.com/Mihir0106" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-slate-800 hover:bg-slate-700 text-white transition-all hover:scale-110 border border-slate-700">
+                <Github size={24} />
+              </a>
+              <a href="https://linkedin.com/in/mihirjain0106" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-slate-800 hover:bg-blue-700 text-white transition-all hover:scale-110 border border-slate-700">
+                <Linkedin size={24} />
+              </a>
+              <a href="mailto:mjmihir9617@gmail.com" className="p-3 rounded-full bg-slate-800 hover:bg-teal-600 text-white transition-all hover:scale-110 border border-slate-700">
+                <Mail size={24} />
+              </a>
+              <a href="https://mihirjain.in/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 rounded-full bg-teal-500 hover:bg-teal-600 text-white font-medium transition-all hover:shadow-lg hover:shadow-teal-500/20">
+                Old Portfolio <ExternalLink size={18} />
+              </a>
+            </div>
+          </div>
+
+          <div className="relative hidden md:block">
+            <div className="relative z-10 bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+              <div className="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="text-xs text-slate-500 ml-2">EventDrivenSystem.java</span>
+              </div>
+              <pre className="text-xs md:text-sm font-mono text-slate-300 overflow-x-auto">
+{`public class Architect {
+  
+  private final String passion = "Scalability";
+  
+  public void buildSystem() {
+    System.out.println("Designing Microservices...");
+    
+    Architecture architecture = new Architecture()
+      .withSpringBoot()
+      .withKafka("Event-Driven")
+      .withCloud("AWS")
+      .optimize();
+      
+    deploy(architecture);
+  }
+}`}
+              </pre>
+            </div>
+            <div className="absolute -bottom-6 -right-6 w-full h-full border-2 border-teal-500/30 rounded-2xl -z-10"></div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-500">
+          <ChevronDown size={32} />
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-24 bg-slate-800/50">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="flex items-center gap-4 mb-12">
+            <div className="h-px bg-slate-700 flex-grow"></div>
+            <h2 className="text-3xl font-bold text-white">About Me</h2>
+            <div className="h-px bg-slate-700 flex-grow"></div>
+          </div>
+          
+          <div className="bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-700">
+            <p className="text-slate-300 leading-8 text-lg mb-6">
+              I am a <span className="text-teal-400 font-semibold">Software Engineer</span> with a deep passion for building robust systems that scale. My core expertise lies within the <span className="text-white font-semibold">Java and C# ecosystems</span>, specifically focusing on Spring Boot and REST APIs.
+            </p>
+            <p className="text-slate-300 leading-8 text-lg">
+              I thrive on the challenge of designing <span className="text-teal-400 font-semibold">event-driven microservices architectures</span>, optimizing performance, and managing complex infrastructure. Currently, I'm building high-impact gaming solutions at Mobile Premier League, ensuring seamless experiences for millions of users.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+              <div className="flex items-start gap-4 p-4 rounded-lg bg-slate-900/50">
+                <BookOpen className="text-teal-400 shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-white mb-1">Education</h4>
+                  <p className="text-sm text-slate-400">B.Tech + M.Tech in ECE</p>
+                  <p className="text-xs text-slate-500">NIT Hamirpur (2019 - 2024)</p>
+                  <p className="text-xs text-slate-500 mt-1">CGPA: 7.96/10</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 p-4 rounded-lg bg-slate-900/50">
+                <Terminal className="text-teal-400 shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-white mb-1">Current Focus</h4>
+                  <p className="text-sm text-slate-400">Distributed Systems & Backend Engineering</p>
+                  <p className="text-xs text-slate-500">High-concurrency gaming infrastructure</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Technical Arsenal</h2>
+            <p className="text-slate-400">Tools and technologies I work with</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {Object.values(skills).map((skillGroup, index) => (
+              <div key={index} className="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-teal-500/50 transition-colors group">
+                <div className="bg-slate-900 w-12 h-12 rounded-lg flex items-center justify-center text-teal-400 mb-6 group-hover:scale-110 transition-transform">
+                  {skillGroup.icon}
+                </div>
+                <h3 className="text-xl font-bold text-white mb-4">{skillGroup.title}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {skillGroup.items.map((item, i) => (
+                    <span key={i} className="px-3 py-1 bg-slate-700/50 text-slate-300 text-sm rounded-full border border-slate-600">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 p-6 bg-slate-800/30 rounded-xl border border-dashed border-slate-700 text-center">
+            <p className="text-slate-400 text-sm">
+              <span className="text-white font-semibold">Other Concepts:</span> Event-Driven Architecture, LLD, HLD, Distributed Systems, OOP, Design Patterns
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section id="experience" className="py-24 bg-slate-800/30">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 flex items-center gap-3">
+            <Briefcase className="text-teal-400" /> Professional Experience
+          </h2>
+
+          <div className="space-y-12 relative before:content-[''] before:absolute before:left-8 md:before:left-1/2 before:top-4 before:bottom-0 before:w-0.5 before:bg-slate-700">
+            {experience.map((exp, index) => (
+              <div key={index} className={`relative flex flex-col md:flex-row gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                
+                {/* Timeline Dot */}
+                <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-teal-500 rounded-full border-4 border-slate-900 mt-1.5 z-10"></div>
+
+                {/* Content Card */}
+                <div className="ml-16 md:ml-0 md:w-1/2">
+                  <div className={`bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg hover:shadow-teal-500/5 transition-all ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                    <span className="text-teal-400 font-mono text-sm mb-2 block">{exp.period}</span>
+                    <h3 className="text-xl font-bold text-white">{exp.role}</h3>
+                    <h4 className="text-lg text-slate-400 mb-4">{exp.company}</h4>
+                    
+                    <ul className={`space-y-2 text-sm text-slate-300 ${index % 2 === 0 ? 'text-left' : 'md:text-right text-left'}`}>
+                      {exp.points.map((point, i) => (
+                        <li key={i} className="leading-relaxed opacity-90">
+                           • {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                
+                {/* Empty Spacer for alternating layout */}
+                <div className="hidden md:block md:w-1/2"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Featured Projects</h2>
+            <p className="text-slate-400">Systems I've architected and built</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
+            {projects.map((project, index) => (
+              <div key={index} className="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-teal-500 transition-all hover:-translate-y-2 group lg:col-start-2">
+                <div className="p-8">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="p-3 bg-slate-900 rounded-lg text-teal-400">
+                      <Cpu size={24} />
+                    </div>
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">
+                      <ExternalLink size={20} />
+                    </a>
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
+                  <p className="text-slate-400 text-sm mb-6">{project.description}</p>
+                  
+                  <div className="space-y-3 mb-6">
+                    {project.details.map((detail, i) => (
+                      <div key={i} className="flex gap-2 text-sm text-slate-300">
+                        <span className="text-teal-500 mt-1">▹</span>
+                        <span>{detail}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-700">
+                    {project.tags.map((tag, i) => (
+                      <span key={i} className="text-xs font-mono text-teal-400 bg-teal-400/10 px-2 py-1 rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Achievements Section */}
+      <section id="achievements" className="py-24 bg-slate-800/30">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-white mb-12 flex items-center gap-3">
+            <Award className="text-yellow-500" /> Honors & Achievements
+          </h2>
+
+          <div className="grid gap-6">
+            {achievements.map((item, index) => (
+              <div key={index} className="flex items-start gap-4 bg-slate-800 p-6 rounded-xl border border-slate-700/50 hover:bg-slate-750 transition-colors">
+                <div className="mt-1 min-w-[24px]">
+                  <div className="w-6 h-6 rounded-full bg-yellow-500/10 flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                  </div>
+                </div>
+                <p className="text-slate-300 font-medium">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer / Contact */}
+      <section id="contact" className="py-24 bg-slate-900 border-t border-slate-800">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-4xl font-bold text-white mb-8">Get In Touch</h2>
+          <p className="text-slate-400 mb-12 max-w-xl mx-auto">
+            I'm currently looking for new opportunities to build high-impact scalable systems. Whether you have a question or just want to say hi, my inbox is open!
+          </p>
+
+          <div className="flex flex-col md:flex-row justify-center gap-8 mb-16">
+            <a href="mailto:mjmihir9617@gmail.com" className="flex items-center justify-center gap-3 text-slate-300 hover:text-teal-400 transition-colors">
+              <Mail size={20} /> mjmihir9617@gmail.com
+            </a>
+            <a href="tel:+917876575103" className="flex items-center justify-center gap-3 text-slate-300 hover:text-teal-400 transition-colors">
+              <Phone size={20} /> +91 7876575103
+            </a>
+            <div className="flex items-center justify-center gap-3 text-slate-300">
+              <MapPin size={20} /> Bengaluru, India
+            </div>
+          </div>
+
+          <a 
+            href="mailto:mjmihir9617@gmail.com" 
+            className="inline-block px-8 py-4 bg-transparent border-2 border-teal-500 text-teal-400 font-bold rounded-lg hover:bg-teal-500/10 transition-all hover:scale-105"
+          >
+            Say Hello
+          </a>
+
+          <div className="mt-20 pt-8 border-t border-slate-800 text-slate-500 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>Designed & Built by Mihir Jain</p>
+            <div className="flex gap-6">
+              <a href="https://github.com/Mihir0106" className="hover:text-teal-400 transition-colors"><Github size={18}/></a>
+              <a href="https://linkedin.com/in/mihirjain0106" className="hover:text-teal-400 transition-colors"><Linkedin size={18}/></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  );
+};
+
+export default Portfolio;
